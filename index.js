@@ -5,11 +5,7 @@ const pdf = require('pdfkit')
 const fs = require('fs')
 app.set('port', process.env.PORT || 3000)
 app.use(cors())
-app.get('/', (req, res) => {
-    res.send("hola Miguel Huayhua");
-}
 
-)
 app.get('/file', (req, res, next) => {
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     let PDF = new pdf()
