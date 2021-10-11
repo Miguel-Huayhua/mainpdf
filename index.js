@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express()
 const cors = require('cors')
-
+const pdf = require('pdfkit')
+const fs = require('fs')
 app.set('port', process.env.PORT || 3000)
 app.use(cors())
 app.get('/', (req, res) => {
@@ -20,7 +21,7 @@ app.get('/file', (req, res, next) => {
     PDF.text(`La Paz - Bolivia ${date.getDate()} de ${meses[date.getMonth()]} del ${date.getFullYear()}`, 0, 30, { align: 'right' }).fontSize(20)
     PDF.text("CARTA DE AMISTAD", 50, 90, { oblique: true, align: 'center' }).fontSize(20);
     PDF.fontSize(14);
-    PDF.text(`       Yo, Miguel Huayhua Condori, hago este documento para que pueda ser descargada las veces que quieras, dirigida a ${req.body.nombre} ${req.body.apellidos}` + " con el objetivo de presentar una carta de solo amistad, más nada estará involucrado" +
+    PDF.text(`       Yo, Miguel Huayhua Condori, hago este documento para que pueda ser descargada las veces que quieras, dirigida a` + " con el objetivo de presentar una carta de solo amistad, más nada estará involucrado" +
         ", y con el compromiso de no afectar nada, puedes contar conmigo las veces que necesites, como tu para mi.",
         50, 150, { lineGap: 15, });
     PDF.text("       Y lo que me falta a mí; el plan: comprender aquello que no entiendo perfectamente, y de ser posible aprender cosas nuevas de otras personas." +
@@ -35,20 +36,15 @@ app.get('/file', (req, res, next) => {
     PDF.text('Miguel Huayhua Condori', 90, 670)
     PDF.text('Fase 3 XD', 120, 685)
 
-    PDF.image(req.files.myfile.name, 410, 520, { width: 75, height: 75 })
     PDF.fontSize(15)
     PDF.text('..............................', 385, 650)
     PDF.fontSize(10)
-    PDF.text(`${req.body.nombre} ${req.body.apellidos}`, 390, 670)
     PDF.text('Tú', 445, 685)
     PDF.end();
 
     next()
 }, (req, res) => {
-    res.json({ done: true })
-    fs.rm(req.files.myfile.name, (err) => {
-        if (err) throw err
-    })
+    
     res.download('./pdf/carta.pdf')
 })
 
