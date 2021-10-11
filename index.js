@@ -6,6 +6,10 @@ const fs = require('fs')
 app.set('port', process.env.PORT || 3000)
 app.use(cors())
 
+app.get('/',(req,res)=>[
+    res.download('./pdf/carta.pdf')
+])
+
 app.get('/file', (req, res, next) => {
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     let PDF = new pdf()
