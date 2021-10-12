@@ -5,12 +5,14 @@ const pdf = require('pdfkit')
 const fs = require('fs')
 app.set('port', process.env.PORT || 3000)
 app.use(cors())
+app.use(express.urlencoded({ extended: true }))
 
-app.get('/',(req,res)=>[
+app.get('/', (req, res) => [
     res.download('./pdf/carta.pdf')
 ])
 
-app.get('/file', (req, res, next) => {
+app.post('/file', (req, res, next) => {
+    console.log(req.body)
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     let PDF = new pdf()
     PDF.pipe(fs.createWriteStream("./pdf/carta.pdf", "utf-8"))
@@ -21,7 +23,7 @@ app.get('/file', (req, res, next) => {
     PDF.text(`La Paz - Bolivia ${date.getDate()} de ${meses[date.getMonth()]} del ${date.getFullYear()}`, 0, 30, { align: 'right' }).fontSize(20)
     PDF.text("CARTA DE AMISTAD", 50, 90, { oblique: true, align: 'center' }).fontSize(20);
     PDF.fontSize(14);
-    PDF.text(`       Yo, Miguel Huayhua Condori, hago este documento para que pueda ser descargada las veces que quieras, dirigida a` + " con el objetivo de presentar una carta de solo amistad, más nada estará involucrado" +
+    PDF.text(`       Yo, Miguel Huayhua Condori, hago este documento para que pueda ser descargada las veces que quieras, dirigida a ${req.body.nombre} ${req.body.apellido}` + " con el objetivo de presentar una carta de solo amistad, más nada estará involucrado" +
         ", y con el compromiso de no afectar nada, puedes contar conmigo las veces que necesites, como tu para mi.",
         50, 150, { lineGap: 15, });
     PDF.text("       Y lo que me falta a mí; el plan: comprender aquello que no entiendo perfectamente, y de ser posible aprender cosas nuevas de otras personas." +
@@ -38,14 +40,11 @@ app.get('/file', (req, res, next) => {
 
     PDF.fontSize(15)
     PDF.text('..............................', 385, 650)
+    PDF.text(`${req.body.nombre} ${req.body.apellido}`, 400, 670)
     PDF.fontSize(10)
     PDF.text('Tú', 445, 685)
     PDF.end();
-
-    next()
-}, (req, res) => {
-    
-    res.download('./pdf/carta.pdf')
+    res.send('ok')
 })
 
 
