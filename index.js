@@ -32,11 +32,11 @@ app.post('/file', (req, res, next) => {
     PDF.text(`La Paz - Bolivia ${date.getDate()} de ${meses[date.getMonth()]} del ${date.getFullYear()}`, 0, 30, { align: 'right' }).fontSize(20)
     PDF.text("CARTA DE AMISTAD", 50, 90, { oblique: true, align: 'center' }).fontSize(20);
     PDF.fontSize(14);
-    PDF.text(`       Yo, Miguel Huayhua Condori, hago este documento para que pueda ser descargada las veces que quieras, dirigida a ${req.body.nombre} ${req.body.apellido}` + " con el objetivo de presentar una carta de solo amistad, más nada estará involucrado" +
-        ", y con el compromiso de no afectar nada, puedes contar conmigo las veces que necesites, como tu para mi.",
+    PDF.text(`       Yo, Miguel Huayhua Condori, hago este documento para que pueda ser descargada las veces que quieras, dirigida a ${req.body.nombre} ${req.body.apellido}` + " con el objetivo de presentar una carta de amistad, donde aseguramos una amistad sólida" +
+        ", pase lo que pase será el comprobante.",
         50, 150, { lineGap: 15, });
-    PDF.text("       Y lo que me falta a mí; el plan: comprender aquello que no entiendo perfectamente, y de ser posible aprender cosas nuevas de otras personas." +
-        " Y pues ese momento llegó, veamos que el tiempo nos va a dar un giro, tu estarás diferente y yo igual, sigue el rumbo que planeas. Fin :P",
+    PDF.text("       Si necesitamos ayuda contamos entre nosotros y que debemos mantener nuestros objetivos seguros, sin fallos ni nada, ya que tenemos la oportunidad de empezar bien otra vez." +
+        " Y pues ya veremos el como cambiaremos con el tiempo, este documento será testigo de muchas cosas, y lo bueno estará ahí  para que siga siempre..., gracias :P",
         { lineGap: 15 })
 
     PDF.image('me.jpg', 110, 520, { width: 75, height: 75 })
