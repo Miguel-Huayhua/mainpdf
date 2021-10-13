@@ -40,7 +40,8 @@ app.post('/file', (req, res) => {
     PDF.fontSize(10)
     PDF.text('Miguel Huayhua Condori', 90, 670)
     PDF.text('Fase 3 XD', 120, 685)
-
+    PDF.end();
+    res.json({done:true});
 })
 
 
