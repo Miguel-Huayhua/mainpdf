@@ -50,7 +50,11 @@ app.post('/file', (req, res) => {
     PDF.fontSize(10)
     PDF.text('Tú', 445, 685)
     PDF.end();
+<<<<<<< HEAD
     res.json({ done: true })
+=======
+    res.json({done:true});
+>>>>>>> 20f253226c748bc84700fc154735623dba575fae
 })
 
 
