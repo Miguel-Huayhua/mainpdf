@@ -1,18 +1,24 @@
 const express = require("express");
+const fileupload = require("express-fileupload")
 const app = express()
 const cors = require('cors')
 const pdf = require('pdfkit')
-const fs = require('fs')
+const fs = require('fs');
+const { resolveObjectURL } = require("buffer");
+
 app.set('port', process.env.PORT || 3000)
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
-app.get('/', (req, res) => [
-    res.download('./pdf/carta.pdf')
-])
+app.use(fileupload({ createParentPath: true }))
 
-app.post('/file', (req, res, next) => {
-    console.log(req.body)
+app.get('/', (req, res) => {
+    res.download('pdf/carta.pdf')
+})
+
+app.post('/file', (req, res) => {
+    console.log(req)
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     let PDF = new pdf()
     PDF.pipe(fs.createWriteStream("./pdf/carta.pdf", "utf-8"))
@@ -44,7 +50,7 @@ app.post('/file', (req, res, next) => {
     PDF.fontSize(10)
     PDF.text('Tú', 445, 685)
     PDF.end();
-    res.send('ok')
+    res.json({ done: true })
 })
 
 
