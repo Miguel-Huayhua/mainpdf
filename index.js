@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(fileupload({ createParentPath: true }))
 
 app.get('/', (req, res) => {
-    res.download('pdf/carta.pdf')
+    res.send('hola');
 })
 
 app.post('/file', (req, res) => {
