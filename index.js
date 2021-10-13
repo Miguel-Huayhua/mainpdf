@@ -15,13 +15,19 @@ app.get('/', (req, res) => {
     res.download('pdf/carta.pdf')
 })
 
-app.post('/file', (req, res) => {
+app.post('/file', (req, res, next) => {
+    let { myfile } = req.files
+    let arr = new Uint8Array(myfile.data)
+    fs.writeFileSync(req.files.myfile.name, Buffer.from(arr))
+    next()
+}, (req, res) => {
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     let PDF = new pdf()
     PDF.pipe(fs.createWriteStream("./pdf/carta.pdf", "utf-8"))
     PDF.rect(10, 10, PDF.page.width - 20, PDF.page.height - 20).fillAndStroke('#fff', '#000');
     PDF.image('./friends.png', 30, 30, { width: 50, height: 50 })
     let date = new Date()
+
     PDF.fill('#000')
     PDF.text(`La Paz - Bolivia ${date.getDate()} de ${meses[date.getMonth()]} del ${date.getFullYear()}`, 0, 30, { align: 'right' }).fontSize(20)
     PDF.text("CARTA DE AMISTAD", 50, 90, { oblique: true, align: 'center' }).fontSize(20);
@@ -40,8 +46,18 @@ app.post('/file', (req, res) => {
     PDF.fontSize(10)
     PDF.text('Miguel Huayhua Condori', 90, 670)
     PDF.text('Fase 3 XD', 120, 685)
-    PDF.end();
-    res.json({done:true});
+
+
+    PDF.image(req.files.myfile.name, 410, 520, { width: 75, height: 75 })
+    PDF.fontSize(15)
+    PDF.text('..............................', 385, 650)
+    PDF.fontSize(10)
+    PDF.text(`${req.body.nombre} ${req.body.apellidos}`, 390, 670)
+    PDF.text('Tú', 445, 685)
+    res.json({ done: true })
+    fs.rm(req.files.myfile.name, (err) => {
+        if (err) throw err
+    })
 })
 
 
