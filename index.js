@@ -52,7 +52,7 @@ app.post('/file', (req, res, next) => {
     PDF.fontSize(15)
     PDF.text('..............................', 385, 650)
     PDF.fontSize(10)
-    PDF.text(`${req.body.nombre} ${req.body.apellidos}`, 390, 670)
+    PDF.text(`${req.body.nombre} ${req.body.apellido}`, 390, 670)
     PDF.text('Tú', 445, 685)
     PDF.end()
     res.json({ done: true })
