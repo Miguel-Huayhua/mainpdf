@@ -4,13 +4,11 @@ const app = express()
 const cors = require('cors')
 const pdf = require('pdfkit')
 const fs = require('fs');
-const { resolveObjectURL } = require("buffer");
 
 app.set('port', process.env.PORT || 3000)
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
 app.use(fileupload({ createParentPath: true }))
 
 app.get('/', (req, res) => {
@@ -43,16 +41,8 @@ app.post('/file', (req, res) => {
     PDF.text('Miguel Huayhua Condori', 90, 670)
     PDF.text('Fase 3 XD', 120, 685)
 
-    PDF.fontSize(15)
-    PDF.text('..............................', 385, 650)
-    PDF.text(`${req.body.nombre} ${req.body.apellido}`, 400, 670)
-    PDF.fontSize(10)
-    PDF.text('Tú', 445, 685)
-    PDF.end();
-    res.json({ done: true })
 })
 
 
 app.listen(app.get('port'), () => {
-    console.log('Servidor preparado')
 })
