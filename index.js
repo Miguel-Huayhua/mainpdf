@@ -18,7 +18,6 @@ app.get('/', (req, res) => {
 })
 
 app.post('/file', (req, res) => {
-    console.log(req)
     let meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     let PDF = new pdf()
     PDF.pipe(fs.createWriteStream("./pdf/carta.pdf", "utf-8"))
